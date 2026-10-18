@@ -89,3 +89,6 @@ android/build/
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Landing page — APK binary (upload separately to Vercel / storage)
+web/*.apk
