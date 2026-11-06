@@ -3,314 +3,601 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="FUTO Learn — The ultimate academic resource app for Federal University of Technology, Owerri (FUTO) students. Download the free APK for Android." />
-  <meta name="keywords" content="FUTO, Federal University of Technology Owerri, FUTO app, student app, academic resources, SICT, download APK" />
-  <meta name="author" content="FUTO Learn" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="FUTO Learn — Your Academic Companion" />
-  <meta property="og:description" content="Access course materials, AI-generated lessons, and academic resources tailored for FUTO students. Free download." />
+  <meta name="description" content="FUTO Learn — AI-powered mobile learning app for FUTO students. Upload your course materials and get personalised AI lessons instantly. Free APK download." />
+  <meta name="keywords" content="FUTO, Federal University of Technology Owerri, AI learning app, student app, SICT, download APK, AI lessons" />
+  <meta property="og:title" content="FUTO Learn — Your AI Academic Companion" />
+  <meta property="og:description" content="Upload your lecture notes and get personalised AI lessons in seconds. Free for all FUTO students." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="./logo.png" />
-
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="FUTO Learn — Your Academic Companion" />
-  <meta name="twitter:description" content="The ultimate academic resource app for FUTO students. Free APK download." />
-
-  <title>FUTO Learn — Download the App</title>
+  <title>FUTO Learn — AI-Powered Learning for FUTO Students</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #05100A;
+      --bg2:       #0A1A10;
+      --bg3:       #0F2418;
+      --green:     #00C853;
+      --green-dim: #00903b;
+      --neon:      #39FF87;
+      --blue:      #3D8EFF;
+      --text:      #F0F7F2;
+      --muted:     #7A9B84;
+      --card:      rgba(255,255,255,0.045);
+      --card-b:    rgba(255,255,255,0.08);
+      --radius:    16px;
+      --shadow:    0 24px 80px rgba(0,200,83,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ─── Noise grain overlay ─── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: .5;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+      transition: background .3s, backdrop-filter .3s, border-color .3s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      background: rgba(5,16,10,.85);
+      backdrop-filter: blur(20px);
+      border-color: rgba(255,255,255,.07);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo { width: 34px; height: 34px; border-radius: 9px; object-fit: cover; }
+    .nav-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--text); }
+    .nav-name span { color: var(--green); }
+    .nav-dl {
+      background: var(--green); color: #fff;
+      padding: 9px 22px; border-radius: 50px;
+      font-weight: 700; font-size: .9rem;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 0 20px rgba(0,200,83,.3);
+    }
+    .nav-dl:hover { transform: translateY(-2px); box-shadow: 0 0 32px rgba(0,200,83,.5); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 100px 5% 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* background blobs */
+    .blob {
+      position: absolute; border-radius: 50%;
+      filter: blur(100px); pointer-events: none;
+    }
+    .b1 { width: 600px; height: 600px; background: rgba(0,200,83,.18); top: -150px; right: -100px; animation: float 10s ease-in-out infinite; }
+    .b2 { width: 400px; height: 400px; background: rgba(61,142,255,.12); bottom: -100px; left: -80px; animation: float 13s ease-in-out infinite reverse; }
+    .b3 { width: 300px; height: 300px; background: rgba(0,200,83,.1); top: 40%; left: 35%; animation: float 8s ease-in-out infinite 2s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50%       { transform: translateY(-30px) scale(1.05); }
+    }
+
+    .hero-inner {
+      position: relative; z-index: 1;
+      max-width: 1200px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,200,83,.1); border: 1px solid rgba(0,200,83,.25);
+      color: var(--green); font-size: .8rem; font-weight: 600;
+      padding: 6px 14px; border-radius: 50px;
+      margin-bottom: 24px;
+    }
+    .badge-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.6rem, 5vw, 4.2rem);
+      font-weight: 800; line-height: 1.1;
+      letter-spacing: -.03em;
+      margin-bottom: 20px;
+    }
+    .grad { background: linear-gradient(135deg, var(--green) 0%, var(--neon) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    .hero-sub {
+      font-size: 1.05rem; color: var(--muted); line-height: 1.75;
+      max-width: 440px; margin-bottom: 36px;
+    }
+    .hero-sub strong { color: var(--text); }
+
+    .cta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px; }
+    .btn-g {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--green); color: #fff;
+      padding: 14px 28px; border-radius: 50px;
+      font-weight: 700; font-size: 1rem; text-decoration: none;
+      box-shadow: 0 0 40px rgba(0,200,83,.35);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-g:hover { transform: translateY(-3px); box-shadow: 0 0 60px rgba(0,200,83,.5); }
+    .btn-o {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: var(--text);
+      padding: 14px 28px; border-radius: 50px;
+      font-weight: 600; font-size: 1rem; text-decoration: none;
+      border: 1.5px solid rgba(255,255,255,.15);
+      transition: border-color .2s, background .2s;
+    }
+    .btn-o:hover { border-color: rgba(255,255,255,.35); background: rgba(255,255,255,.04); }
+
+    .stats { display: flex; gap: 32px; }
+    .stat-item { }
+    .stat-n { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--text); }
+    .stat-l { font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-top: 2px; }
+
+    /* ─── PHONE ─── */
+    .phone-wrap {
+      display: flex; justify-content: center; align-items: center;
+      position: relative;
+    }
+    .phone {
+      width: 260px;
+      background: #111;
+      border-radius: 44px;
+      padding: 10px;
+      border: 2px solid rgba(255,255,255,.1);
+      box-shadow: 0 40px 120px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.04), inset 0 0 0 1px rgba(255,255,255,.06);
+      position: relative;
+      animation: phoneFloat 6s ease-in-out infinite;
+    }
+    @keyframes phoneFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
+
+    .phone-notch {
+      position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+      width: 90px; height: 7px; background: #000;
+      border-radius: 0 0 8px 8px; z-index: 5;
+    }
+    .phone-screen {
+      border-radius: 36px;
+      overflow: hidden;
+      aspect-ratio: 9/19.5;
+      background: #0D1F14;
+    }
+    .phone-screen img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top;
+      display: block;
+    }
+    .phone-btn {
+      position: absolute; right: -3px; top: 100px;
+      width: 3px; height: 36px;
+      background: #2a2a2a; border-radius: 2px;
+    }
+    .phone-btn2 {
+      position: absolute; left: -3px; top: 90px;
+      width: 3px; height: 24px;
+      background: #2a2a2a; border-radius: 2px;
+    }
+    .phone-btn3 {
+      position: absolute; left: -3px; top: 124px;
+      width: 3px; height: 44px;
+      background: #2a2a2a; border-radius: 2px;
+    }
+
+    /* floating chips */
+    .chip {
+      position: absolute;
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(10,26,16,.9);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px; padding: 12px 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.4);
+      white-space: nowrap;
+    }
+    .chip-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .chip-t { font-size: .8rem; font-weight: 700; color: var(--text); }
+    .chip-s { font-size: .72rem; color: var(--muted); }
+    .chip1 { left: -130px; top: 60px; animation: chipF 7s ease-in-out infinite; }
+    .chip2 { left: -120px; bottom: 100px; animation: chipF 9s ease-in-out infinite 1s; }
+    .chip3 { right: -130px; top: 100px; animation: chipF 8s ease-in-out infinite .5s; }
+    @keyframes chipF { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+    /* ─── SECTION SHARED ─── */
+    section { position: relative; z-index: 1; }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
+    .s-eye { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--green); margin-bottom: 12px; }
+    .s-h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+    .s-p { font-size: 1rem; color: var(--muted); max-width: 560px; line-height: 1.75; margin-bottom: 56px; }
+
+    /* ─── FEATURES ─── */
+    .features { padding: 100px 0; }
+    .feat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .feat-card {
+      background: var(--card); border: 1px solid rgba(255,255,255,.07);
+      border-radius: 20px; padding: 28px;
+      transition: transform .3s, background .3s, border-color .3s, box-shadow .3s;
+      cursor: default;
+    }
+    .feat-card:hover {
+      transform: translateY(-6px);
+      background: var(--card-b);
+      border-color: rgba(0,200,83,.2);
+      box-shadow: 0 20px 60px rgba(0,0,0,.3), 0 0 0 1px rgba(0,200,83,.1);
+    }
+    .feat-ic {
+      width: 50px; height: 50px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px; font-size: 1.3rem;
+    }
+    .ic-g { background: rgba(0,200,83,.15); }
+    .ic-b { background: rgba(61,142,255,.15); }
+    .ic-p { background: rgba(167,105,255,.15); }
+    .ic-a { background: rgba(255,180,0,.15); }
+    .ic-t { background: rgba(0,210,180,.15); }
+    .ic-r { background: rgba(255,80,80,.15); }
+    .feat-title { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.05rem; margin-bottom:10px; }
+    .feat-desc { font-size:.88rem; color:var(--muted); line-height:1.7; }
+
+    /* ─── HOW IT WORKS ─── */
+    .how { padding: 100px 0; background: linear-gradient(180deg, transparent, rgba(0,200,83,.03), transparent); }
+    .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; position: relative; }
+    .steps::before {
+      content: '';
+      position: absolute; top: 28px; left: calc(16.66% + 16px); right: calc(16.66% + 16px);
+      height: 1px; background: linear-gradient(90deg, var(--green), rgba(0,200,83,.1));
+    }
+    .step { display: flex; flex-direction: column; gap: 16px; }
+    .step-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--bg); border: 2px solid var(--green);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 800;
+      color: var(--green); flex-shrink: 0;
+      box-shadow: 0 0 24px rgba(0,200,83,.2);
+    }
+    .step-t { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.05rem; }
+    .step-d { font-size:.88rem; color:var(--muted); line-height:1.7; }
+
+    /* ─── DOWNLOAD ─── */
+    .dl-sec { padding: 100px 0; }
+    .dl-card {
+      background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+      border: 1px solid rgba(0,200,83,.2);
+      border-radius: 28px; padding: 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 32px; flex-wrap: wrap;
+      box-shadow: var(--shadow);
+      position: relative; overflow: hidden;
+    }
+    .dl-card::before {
+      content:''; position:absolute; top:-60px; right:-60px;
+      width:300px; height:300px; border-radius:50%;
+      background:rgba(0,200,83,.08); filter:blur(80px);
+      pointer-events:none;
+    }
+    .dl-left { display:flex; align-items:center; gap:20px; }
+    .dl-logo { width:64px; height:64px; border-radius:16px; object-fit:cover; }
+    .dl-name { font-family:'Space Grotesk',sans-serif; font-size:1.6rem; font-weight:800; }
+    .dl-meta { font-size:.85rem; color:var(--muted); margin-top:4px; }
+    .dl-tag { font-size:.9rem; color:var(--muted); margin-top:2px; }
+    .dl-right { display:flex; flex-direction:column; align-items:flex-end; gap:12px; }
+    .btn-dl {
+      display:inline-flex; align-items:center; gap:10px;
+      background:var(--green); color:#fff;
+      padding:16px 32px; border-radius:50px;
+      font-weight:800; font-size:1rem; text-decoration:none;
+      box-shadow:0 0 50px rgba(0,200,83,.4);
+      transition:transform .2s, box-shadow .2s;
+    }
+    .btn-dl:hover { transform:translateY(-3px); box-shadow:0 0 70px rgba(0,200,83,.6); }
+    .dl-note { font-size:.8rem; color:var(--muted); display:flex; align-items:center; gap:6px; }
+
+    .reqs { display:flex; gap:16px; flex-wrap:wrap; margin-top:32px; }
+    .req {
+      display:flex; align-items:center; gap:8px;
+      background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);
+      border-radius:50px; padding:8px 16px;
+      font-size:.82rem; color:var(--muted);
+    }
+    .req svg { color:var(--green); flex-shrink:0; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top:1px solid rgba(255,255,255,.07);
+      padding:36px 5%;
+      display:flex; align-items:center; justify-content:space-between;
+      flex-wrap:wrap; gap:16px;
+    }
+    .foot-brand { display:flex; align-items:center; gap:10px; }
+    .foot-logo { width:28px; height:28px; border-radius:7px; object-fit:cover; }
+    .foot-n { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:.95rem; }
+    .foot-n span { color:var(--green); }
+    .foot-links { display:flex; gap:24px; }
+    .foot-links a { font-size:.85rem; color:var(--muted); text-decoration:none; transition:color .2s; }
+    .foot-links a:hover { color:var(--text); }
+    .foot-copy { font-size:.8rem; color:var(--muted); }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+    .reveal.vis { opacity:1; transform:translateY(0); }
+    .reveal-d1 { transition-delay:.1s; }
+    .reveal-d2 { transition-delay:.2s; }
+    .reveal-d3 { transition-delay:.3s; }
+    .reveal-d4 { transition-delay:.4s; }
+    .reveal-d5 { transition-delay:.5s; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1100px) {
+      .chip1,.chip2,.chip3 { display:none; }
+      .phone { width: 220px; }
+    }
+    @media (max-width: 860px) {
+      .hero-inner { grid-template-columns:1fr; text-align:center; gap:48px; }
+      .hero-sub { margin:0 auto 36px; }
+      .cta-row { justify-content:center; }
+      .stats { justify-content:center; }
+      .phone-wrap { order:-1; }
+      .feat-grid { grid-template-columns:1fr 1fr; }
+      .steps { grid-template-columns:1fr; }
+      .steps::before { display:none; }
+      .dl-card { flex-direction:column; align-items:flex-start; }
+      .dl-right { align-items:flex-start; }
+    }
+    @media (max-width: 540px) {
+      .feat-grid { grid-template-columns:1fr; }
+      h1 { font-size:2.2rem; }
+      .dl-card { padding:28px; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- ========== NAVBAR ========== -->
-  <nav class="navbar" id="navbar">
-    <div class="nav-container">
-      <div class="nav-brand">
-        <div class="nav-logo-wrap">
-          <img src="./logo.png" alt="FUTO Learn logo" class="nav-logo-img" />
-        </div>
-        <span class="nav-brand-name">FUTO <span class="brand-accent">Learn</span></span>
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-brand">
+    <img src="./logo.png" alt="FUTO Learn" class="nav-logo" />
+    <span class="nav-name">FUTO <span>Learn</span></span>
+  </a>
+  <a href="https://github.com/Mikey-200/futo-learn/releases/latest/download/futo-learn.apk" class="nav-dl" id="nav-dl">↓ Download APK</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+
+  <div class="hero-inner">
+    <!-- LEFT -->
+    <div class="hero-copy">
+      <div class="hero-badge"><span class="badge-dot"></span> Free · Android · Version 1.0.0</div>
+      <h1>Your Academic<br /><span class="grad">AI Superpower</span><br />Awaits You.</h1>
+      <p class="hero-sub">
+        Upload your lecture notes — FUTO Learn's AI reads them and generates a
+        <strong>personalised lesson</strong> just for you. Quiz yourself, track progress,
+        and actually understand your coursework.
+      </p>
+      <div class="cta-row">
+        <a href="https://github.com/Mikey-200/futo-learn/releases/latest/download/futo-learn.apk" class="btn-g" id="hero-dl">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Free APK
+        </a>
+        <a href="#features" class="btn-o" id="hero-feat">Explore Features →</a>
       </div>
-      <a href="https://github.com/Mikey-200/futo-learn/releases/latest/download/futo-learn.apk" class="nav-cta" id="nav-download-btn">Download APK</a>
-    </div>
-  </nav>
-
-  <!-- ========== HERO ========== -->
-  <section class="hero" id="home">
-    <div class="hero-bg-orbs">
-      <div class="orb orb-1"></div>
-      <div class="orb orb-2"></div>
-      <div class="orb orb-3"></div>
-    </div>
-
-    <div class="hero-container">
-      <div class="hero-content">
-        <div class="hero-badge">
-          <span class="badge-dot"></span>
-          Free · Android · Version 1.0.0
-        </div>
-
-        <h1 class="hero-title">
-          Your Academic<br />
-          <span class="title-gradient">Superpower</span><br />
-          Awaits You.
-        </h1>
-
-        <p class="hero-subtitle">
-          The all-in-one academic companion built exclusively for
-          <strong>FUTO SICT</strong> students. Access curated course materials,
-          AI-powered lessons, and everything you need — right on your phone.
-        </p>
-
-        <div class="hero-actions">
-          <a href="https://github.com/Mikey-200/futo-learn/releases/latest/download/futo-learn.apk" class="btn-primary" id="hero-download-btn" download="futo-learn.apk">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-            Download Free APK
-          </a>
-          <a href="#features" class="btn-secondary" id="hero-learn-btn">
-            Explore Features
-          </a>
-        </div>
-
-        <div class="hero-stats">
-          <div class="stat">
-            <span class="stat-num">5+</span>
-            <span class="stat-label">Faculties</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat">
-            <span class="stat-num">100%</span>
-            <span class="stat-label">Free</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat">
-            <span class="stat-num">AI</span>
-            <span class="stat-label">Powered</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-visual">
-        <div class="phone-frame">
-          <div class="phone-screen">
-            <img src="./mockup.png" alt="FUTO Learn app screenshot" class="app-screenshot" />
-          </div>
-          <div class="phone-glow"></div>
-        </div>
-        <div class="floating-card card-1">
-          <span class="card-icon">📚</span>
-          <div>
-            <p class="card-title">Materials</p>
-            <p class="card-sub">All semesters</p>
-          </div>
-        </div>
-        <div class="floating-card card-2">
-          <span class="card-icon">🤖</span>
-          <div>
-            <p class="card-title">AI Lessons</p>
-            <p class="card-sub">Personalized</p>
-          </div>
-        </div>
-        <div class="floating-card card-3">
-          <span class="card-icon">🌙</span>
-          <div>
-            <p class="card-title">Dark Mode</p>
-            <p class="card-sub">Easy on eyes</p>
-          </div>
-        </div>
+      <div class="stats">
+        <div class="stat-item"><div class="stat-n">100%</div><div class="stat-l">Free</div></div>
+        <div class="stat-item"><div class="stat-n">AI</div><div class="stat-l">Powered</div></div>
+        <div class="stat-item"><div class="stat-n">60s</div><div class="stat-l">Avg lesson time</div></div>
       </div>
     </div>
 
-    <div class="hero-scroll-hint">
-      <div class="scroll-line"></div>
-      <span>Scroll to explore</span>
-    </div>
-  </section>
-
-  <!-- ========== FEATURES ========== -->
-  <section class="features" id="features">
-    <div class="section-container">
-      <div class="section-header">
-        <p class="section-eyebrow">Why FUTO Learn?</p>
-        <h2 class="section-title">Everything you need,<br />built for <span class="title-gradient">FUTO students</span></h2>
-        <p class="section-desc">Designed from the ground up for the FUTO SICT curriculum — not a generic study app.</p>
+    <!-- RIGHT — CSS PHONE -->
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <img src="./screen.png" alt="FUTO Learn app home screen" />
+        </div>
+        <div class="phone-btn"></div>
+        <div class="phone-btn2"></div>
+        <div class="phone-btn3"></div>
       </div>
 
-      <div class="features-grid">
-
-        <div class="feature-card" id="feature-materials">
-          <div class="feature-icon-wrap green">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          </div>
-          <h3 class="feature-title">Upload Any Course Material</h3>
-          <p class="feature-desc">Drop in any PDF or DOCX lecture note. The app extracts the text automatically — even from scanned documents using AI-powered OCR.</p>
-        </div>
-
-        <div class="feature-card" id="feature-ai">
-          <div class="feature-icon-wrap blue">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M12 8v4l3 3"/></svg>
-          </div>
-          <h3 class="feature-title">AI-Powered Personalised Lessons</h3>
-          <p class="feature-desc">Tell the AI what you already know and what you want to learn — it generates a structured lesson tailored specifically to your knowledge level.</p>
-        </div>
-
-        <div class="feature-card" id="feature-quiz">
-          <div class="feature-icon-wrap purple">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-          </div>
-          <h3 class="feature-title">Smart Quiz System</h3>
-          <p class="feature-desc">Test yourself with 7 AI-generated multiple-choice questions based on your actual lesson. Get instant feedback and explanations on every answer.</p>
-        </div>
-
-        <div class="feature-card" id="feature-theme">
-          <div class="feature-icon-wrap amber">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-          </div>
-          <h3 class="feature-title">Multiple Lesson Versions</h3>
-          <p class="feature-desc">Not happy with the lesson? Regenerate with a specific focus — "explain step by step" or "use more examples" — and keep all versions to compare.</p>
-        </div>
-
-        <div class="feature-card" id="feature-progress">
-          <div class="feature-icon-wrap teal">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          </div>
-          <h3 class="feature-title">Progress Dashboard</h3>
-          <p class="feature-desc">Track your study stats at a glance — materials uploaded, lessons generated, average quiz score, and your recent activity all in one home screen.</p>
-        </div>
-
-        <div class="feature-card" id="feature-portal">
-          <div class="feature-icon-wrap red">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
-          </div>
-          <h3 class="feature-title">Light &amp; Dark Mode</h3>
-          <p class="feature-desc">Switch between a clean light mode for daytime study and a gorgeous dark mode for late-night cramming sessions. Your preference is saved automatically.</p>
-        </div>
-
+      <!-- floating chips -->
+      <div class="chip chip1">
+        <div class="chip-icon ic-g">📚</div>
+        <div><div class="chip-t">Materials</div><div class="chip-s">PDF & DOCX</div></div>
+      </div>
+      <div class="chip chip2">
+        <div class="chip-icon ic-b">🤖</div>
+        <div><div class="chip-t">AI Lessons</div><div class="chip-s">Personalised</div></div>
+      </div>
+      <div class="chip chip3">
+        <div class="chip-icon ic-a">🌙</div>
+        <div><div class="chip-t">Dark Mode</div><div class="chip-s">Easy on eyes</div></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ========== HOW IT WORKS ========== -->
-  <section class="how-it-works" id="how-it-works">
-    <div class="section-container">
-      <div class="section-header">
-        <p class="section-eyebrow">Simple as 1-2-3</p>
-        <h2 class="section-title">Get started in <span class="title-gradient">minutes</span></h2>
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="wrap">
+    <div class="reveal"><p class="s-eye">Why FUTO Learn?</p></div>
+    <div class="reveal reveal-d1"><h2 class="s-h2">Everything built for<br /><span class="grad">FUTO students</span></h2></div>
+    <div class="reveal reveal-d2"><p class="s-p">Not a generic study app. Built specifically for how FUTO students actually study — from uploading dense lecture PDFs to genuinely understanding them.</p></div>
+
+    <div class="feat-grid">
+      <div class="feat-card reveal reveal-d1">
+        <div class="feat-ic ic-g">📄</div>
+        <div class="feat-title">Upload Any Lecture Material</div>
+        <p class="feat-desc">Drop in any PDF or DOCX. The app extracts text instantly — even from scanned documents using AI-powered OCR via Google Gemini.</p>
       </div>
-
-      <div class="steps">
-        <div class="step" id="step-1">
-          <div class="step-number">01</div>
-          <div class="step-content">
-            <h3 class="step-title">Download &amp; Install the APK</h3>
-            <p class="step-desc">Tap Download APK below, open the file on your Android phone, and allow installation from unknown sources when prompted.</p>
-          </div>
-        </div>
-        <div class="step-connector"></div>
-        <div class="step" id="step-2">
-          <div class="step-number">02</div>
-          <div class="step-content">
-            <h3 class="step-title">Upload Your Course Material</h3>
-            <p class="step-desc">Open the app, tap Materials → hit the + button and pick any PDF or DOCX lecture note from your phone storage.</p>
-          </div>
-        </div>
-        <div class="step-connector"></div>
-        <div class="step" id="step-3">
-          <div class="step-number">03</div>
-          <div class="step-content">
-            <h3 class="step-title">Generate &amp; Learn</h3>
-            <p class="step-desc">Tap the material, describe your knowledge level, and let the AI build you a personalised lesson. Then quiz yourself to test your understanding.</p>
-          </div>
-        </div>
+      <div class="feat-card reveal reveal-d2">
+        <div class="feat-ic ic-b">🧠</div>
+        <div class="feat-title">Personalised AI Lessons</div>
+        <p class="feat-desc">Tell the AI what you already know and what you want to understand. It generates a structured lesson tuned exactly to your level.</p>
+      </div>
+      <div class="feat-card reveal reveal-d3">
+        <div class="feat-ic ic-p">✅</div>
+        <div class="feat-title">Smart Quiz System</div>
+        <p class="feat-desc">Test yourself with 7 AI-generated MCQs based on your actual lesson. Get instant feedback and explanations for every answer.</p>
+      </div>
+      <div class="feat-card reveal reveal-d1">
+        <div class="feat-ic ic-a">🔄</div>
+        <div class="feat-title">Regenerate with Focus</div>
+        <p class="feat-desc">Not satisfied? Ask the AI to regenerate with a specific focus — "use more examples", "simplify the maths" — and keep all versions.</p>
+      </div>
+      <div class="feat-card reveal reveal-d2">
+        <div class="feat-ic ic-t">📊</div>
+        <div class="feat-title">Progress Dashboard</div>
+        <p class="feat-desc">Track materials uploaded, lessons generated, average quiz score, and recent activity — all in one clean home screen.</p>
+      </div>
+      <div class="feat-card reveal reveal-d3">
+        <div class="feat-ic ic-r">🌙</div>
+        <div class="feat-title">Light &amp; Dark Mode</div>
+        <p class="feat-desc">Switch between clean light mode for daytime and a gorgeous AMOLED-friendly dark mode for late-night sessions. Preference saved automatically.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ========== DOWNLOAD ========== -->
-  <section class="download" id="download">
-    <div class="download-bg-orbs">
-      <div class="orb orb-d1"></div>
-      <div class="orb orb-d2"></div>
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="reveal"><p class="s-eye">Simple as 1-2-3</p></div>
+    <div class="reveal reveal-d1"><h2 class="s-h2">Get started in <span class="grad">minutes</span></h2></div>
+    <div class="reveal reveal-d2"><p class="s-p">No sign-up. No subscription. Just download, upload your notes, and start learning.</p></div>
+    <div class="steps">
+      <div class="step reveal reveal-d1">
+        <div class="step-num">01</div>
+        <div class="step-t">Download &amp; Install</div>
+        <p class="step-d">Tap Download APK, open the file on your Android phone, and allow installation from unknown sources when prompted.</p>
+      </div>
+      <div class="step reveal reveal-d2">
+        <div class="step-num">02</div>
+        <div class="step-t">Upload Your Notes</div>
+        <p class="step-d">Go to Materials → tap the + button → pick any PDF or DOCX lecture note from your phone. Text is extracted automatically.</p>
+      </div>
+      <div class="step reveal reveal-d3">
+        <div class="step-num">03</div>
+        <div class="step-t">Generate &amp; Learn</div>
+        <p class="step-d">Describe your knowledge level, hit Generate — your AI lesson appears in seconds. Then quiz yourself to lock in the knowledge.</p>
+      </div>
     </div>
+  </div>
+</section>
 
-    <div class="section-container">
-      <div class="download-card">
-        <div class="download-left">
-          <div class="download-icon-wrap">
-            <img src="./logo.png" alt="FUTO Learn" class="download-logo" />
-          </div>
-          <div>
-            <h2 class="download-title">FUTO Learn</h2>
-            <p class="download-meta">Version 1.0.0 &nbsp;·&nbsp; Android 6.0+ &nbsp;·&nbsp; Free</p>
-            <p class="download-tagline">Your ultimate academic companion.</p>
-          </div>
-        </div>
-
-        <div class="download-right">
-          <a href="https://github.com/Mikey-200/futo-learn/releases/latest/download/futo-learn.apk" class="btn-download" id="main-download-btn" download="futo-learn.apk">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-            Download APK
-          </a>
-          <p class="download-note">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            Android only · Enable "Install from unknown sources"
-          </p>
+<!-- DOWNLOAD -->
+<section class="dl-sec" id="download">
+  <div class="wrap">
+    <div class="dl-card reveal">
+      <div class="dl-left">
+        <img src="./logo.png" alt="FUTO Learn" class="dl-logo" />
+        <div>
+          <div class="dl-name">FUTO Learn</div>
+          <div class="dl-meta">Version 1.0.0 &nbsp;·&nbsp; Android 6.0+ &nbsp;·&nbsp; Free</div>
+          <div class="dl-tag">Your ultimate AI academic companion.</div>
         </div>
       </div>
-
-      <!-- Requirements -->
-      <div class="requirements">
-        <div class="req-item">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-          Android 6.0 or higher
-        </div>
-        <div class="req-item">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-          ~30 MB Storage
-        </div>
-        <div class="req-item">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
-          Internet for AI features
-        </div>
-        <div class="req-item">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          100% Free, no ads
+      <div class="dl-right">
+        <a href="https://github.com/Mikey-200/futo-learn/releases/latest/download/futo-learn.apk" class="btn-dl" id="main-dl" download="futo-learn.apk">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download APK
+        </a>
+        <div class="dl-note">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Android only · Enable "Install from unknown sources"
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- ========== FOOTER ========== -->
-  <footer class="footer">
-    <div class="footer-container">
-      <div class="footer-brand">
-        <div class="nav-logo-wrap small">
-          <img src="./logo.png" alt="FUTO Learn" class="nav-logo-img" />
-        </div>
-        <span class="footer-name">FUTO <span class="brand-accent">Learn</span></span>
+    <div class="reqs reveal reveal-d1">
+      <div class="req">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        Android 6.0 or higher
       </div>
-      <p class="footer-tagline">Built with ❤️ for FUTO SICT students</p>
-      <div class="footer-links">
-        <a href="https://portal.futo.edu.ng" target="_blank" rel="noopener noreferrer" id="footer-portal-link">FUTO Portal</a>
-        <span class="footer-sep">·</span>
-        <a href="#download" id="footer-download-link">Download</a>
-        <span class="footer-sep">·</span>
-        <a href="#features" id="footer-features-link">Features</a>
+      <div class="req">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        ~60 MB Storage
       </div>
-      <p class="footer-copy">© 2025 FUTO Learn. For educational use.</p>
+      <div class="req">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+        Internet for AI features
+      </div>
+      <div class="req">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        100% Free, no ads
+      </div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script src="./main.js"></script>
+<!-- FOOTER -->
+<footer>
+  <div class="foot-brand">
+    <img src="./logo.png" alt="FUTO Learn" class="foot-logo" />
+    <span class="foot-n">FUTO <span>Learn</span></span>
+  </div>
+  <p style="font-size:.85rem;color:var(--muted)">Built with ❤️ for FUTO SICT students</p>
+  <div class="foot-links">
+    <a href="https://portal.futo.edu.ng" target="_blank" rel="noopener">FUTO Portal</a>
+    <a href="#download">Download</a>
+    <a href="#features">Features</a>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  // Scroll reveal
+  const els = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  els.forEach(el => obs.observe(el));
+
+  // Smooth anchor scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
 </body>
 </html>
